@@ -1,8 +1,6 @@
 import ItemIcon from './ItemIcon';
 import input from './control/Input';
 
-import trigger from './config/trigger';
-
 const form_item = {
   input,
 };
@@ -13,12 +11,9 @@ export default {
     var $this = this;
     // 获取当前控件渲染
     const arr = (form_item[this.ele.toLowerCase()] && form_item[this.ele.toLowerCase()](this, h)) || [];
-    // 拥有绑定的值，需回填到控件
-    this.$set(this.obj.value, 'value', typeof this.value !== "undefined" ? this.value : this.obj.value.value);
     // 显示配置按钮并且控件允许被配置
-    const item_icon = this.configIcon && this.obj.config.value ? ItemIcon(this, h) : [];
+    const item_icon = this.configIcon ? ItemIcon(this, h) : [];
     // 已被绑定prop,且require为必填,视为校验字段
-    console.log(this.obj.prop, this.obj.require)
     const validate = !!this.obj.prop.value && !!this.obj.require.value;
     // 非 Title Hr P 需要FormItem
     if (['title', 'hr', 'p'].indexOf((this.ele.toLowerCase())) < 0) {
@@ -28,23 +23,9 @@ export default {
           'is-required': validate
         },
         props: {
-          label: (this.obj.label.value|| this.ele) + '：',
+          label: this.obj.label.value + '：',
           // 指定验证name
-          prop: this.obj.prop.value || 'temp',
-          // 验证规则
-          rules: {
-            required: validate,
-            message: this.obj.ruleError.value || '该项为必填项',
-            trigger: trigger[this.obj.type.value],
-            validator: (rule, value, callback) => {
-              // 没有配置按钮并且允许验证
-              if (!this.configIcon && validate && (Array.isArray(value) ? !value.length : !value)) {
-                callback(new Error('该项为必填项'));
-              } else {
-                callback();
-              }
-            }
-          },
+          prop: this.obj.prop.value,
         }
       };
       return h(

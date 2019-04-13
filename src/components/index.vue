@@ -8,7 +8,7 @@
           </el-form-item>
           <draggable :clone="cloneData" :list="form_list" :options="dragOptions1">
             <transition-group type="transition" :name="'flip-list'" tag="div">
-              <renders v-for="(element,index) in form_list" :key="index+1" :ele="element.ele" :obj="element.obj || {}"></renders>
+              <renders v-for="(element,index) in form_list" :key="index+1" :ele="element.ele" :obj="element.obj || {}" :configIcon="false"></renders>
             </transition-group>
           </draggable>
         </el-form>
@@ -35,39 +35,40 @@
         </el-form>
       </el-col>
     </el-row>
-    <el-dialog :title="'配置' + modalFormData.modalTitle.value + '属性'" :visible.sync="showModal" :mask-closable="false">
-      <el-form class="form_content" label-width="100px" :model="modalFormData" ref="modalFormData">
-        <el-form-item label="控件名称：" v-if="typeof modalFormData.label != 'undefined'">
-          <el-input v-model="modalFormData.label.value" placeholder="请输入控件名称" :maxlength="4"></el-input >
+    <el-dialog :title="`配置${modalFormData.modalTitle ? modalFormData.modalTitle.value : ''}属性`" :visible.sync="showModal" >
+      <el-form class="form_content" label-width="100px" :model="modalFormData" ref="modalFormData" :rules="formRules">
+        <el-form-item label="控件名称：" v-if="typeof modalFormData.label != 'undefined'" prop="label.value" key="label">
+          <el-input v-model="modalFormData.label.value" placeholder="请输入控件名称"></el-input >
         </el-form-item> 
-        <el-form-item label="关联字段" v-if="typeof modalFormData.prop != 'undefined'">
+        <el-form-item label="关联字段" v-if="typeof modalFormData.prop != 'undefined'" prop="prop.value" key="prop">
           <el-input v-model="modalFormData.prop.value" placeholder="v-model值"></el-input >
         </el-form-item> 
-        <el-form-item label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'">
+        <el-form-item label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'" prop="placeholder.value" key="placeholder">
           <el-input v-model="modalFormData.placeholder.value" placeholder="请输入placeholder"></el-input >
         </el-form-item> 
-        <el-form-item label="最大长度：" v-if="typeof modalFormData.maxLength != 'undefined'">
+        <el-form-item label="最大长度：" v-if="typeof modalFormData.maxLength != 'undefined'" prop="maxLength.value" key="maxLength">
           <el-input-number v-model="modalFormData.maxLength.value" placeholder="请输入文本限制最大长度">
           </el-input-number>
         </el-form-item> 
-        <el-form-item label="最大限制：" v-if="typeof modalFormData.maxSize != 'undefined'">
+        <el-form-item label="最大限制：" v-if="typeof modalFormData.maxSize != 'undefined'" prop="maxSize.value" key="maxSize">
           <el-input-number :formatter="value => `${value}kb`" :parser="value => value.replace('kb', '')" v-model="modalFormData.maxSize.value" placeholder="请输入上传文件最大限制">
-          </el-input-number>
-        </el-form-item> 
-        <el-form-item label="上边距：" v-if="typeof modalFormData.marginTop != 'undefined'">
-          <el-input-number :formatter="value => `${value}px`" :parser="value => value.replace('px', '')" v-model="modalFormData.marginTop.value" placeholder="请输入标签上边距">
-          </el-input-number>
-        </el-form-item> 
-        <el-form-item label="下边距：" v-if="typeof modalFormData.marginBottom != 'undefined'">
-          <el-input-number :formatter="value => `${value}px`" :parser="value => value.replace('px', '')" v-model="modalFormData.marginBottom.value" placeholder="请输入标签下边距">
           </el-input-number>
         </el-form-item> 
         <el-form-item label="详细地址：" v-if="typeof modalFormData.details_address != 'undefined'">
           <el-checkbox v-model="modalFormData.details_address.value">是否需要详细地址</el-checkbox>
         </el-form-item> 
-        <el-form-item label="是否必填：" v-if="typeof modalFormData.require != 'undefined'">
-          <el-checkbox v-model="modalFormData.require.value">必填</el-checkbox>
+        <el-form-item label="删除按钮：" v-if="typeof modalFormData.clearable != 'undefined'">
+          <el-radio-group v-model="modalFormData.clearable.value">
+            <el-radio :label="true">显示</el-radio>
+            <el-radio :label="false">隐藏</el-radio>
+          </el-radio-group>
         </el-form-item> 
+        <el-form-item label="是否必填：" v-if="typeof modalFormData.require != 'undefined'">
+          <el-radio-group v-model="modalFormData.require.value">
+            <el-radio :label="true">必填</el-radio>
+            <el-radio :label="false">非必填</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="校验错误：" v-if="typeof modalFormData.ruleError != 'undefined' && modalFormData.require.value">
           <el-input v-model="modalFormData.ruleError.value" placeholder="请输入校验错误提示"></el-input >
         </el-form-item> 
@@ -80,18 +81,9 @@
             <el-radio label="yyyy-MM-dd HH:mm"></el-radio>
           </el-radio-group>
         </el-form-item> 
-        <el-form-item label="行内元素：" v-if="typeof modalFormData.inlineBlock != 'undefined'">
-          <el-checkbox v-model="modalFormData.inlineBlock.value">是</el-checkbox>
-        </el-form-item> 
         <el-form-item label="显示行数：" v-if="typeof modalFormData.maxRows != 'undefined'">
           <Slider v-model="modalFormData.maxRows.value" :min="2" :max="10"></Slider>
         </el-form-item> 
-        <el-form-item label="标题大小：" v-if="typeof modalFormData.level != 'undefined'">
-          <el-input-number :max="6" :min="1" v-model="modalFormData.level.value"></el-input-number>
-        </el-form-item> 
-        <!-- <el-form-item label="字体颜色：" v-if="typeof modalFormData.color != 'undefined'">
-          <ColorPicker v-model="modalFormData.color" />
-        </el-form-item>  -->
       </el-form>
       <div slot="footer">
         <el-button type="text" @click="handleCancel">取消</el-button>
@@ -99,7 +91,13 @@
       </div>
     </el-dialog>
     <el-dialog :visible.sync="codeContentModal" title="HTML 代码" :mask-closable="false">
-      <pre v-highlightjs="codeContent"><code class="html"></code></pre>
+      <pre v-highlightjs="codeHtml"><code class="html" id="codehtml"></code></pre>
+      <div slot="footer">
+        <el-button type="primary" ref="copy"
+        v-clipboard:copy="codeHtml"
+        v-clipboard:success="onCopy"
+        v-clipboard:error="onError">复制代码</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -107,6 +105,7 @@
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
 import renderTag from "./custom_form/renderTag";
+import {formRules} from "../data/rules";
 
 // 代码高亮样式
 import '@/assets/css/highlight/default.css'
@@ -117,6 +116,8 @@ export default {
   },
   data() {
     return {
+      copyBtn: null, //存储初始化复制按钮事件
+      formRules: formRules,
       labelWidth: 120, 
       form_list: form_list,
       sortable_item: [],
@@ -125,15 +126,11 @@ export default {
       // 深拷贝对象，防止默认空对象被更改
       // 颜色选择器bug，对象下color不更新      
       modalFormData: {
-        color: '',
-        loading: false,
-        modalTitle: {
-          value: ''
-        }
+        loading: false
       },
       formData: {},
-      codeContent: '' // 代码高亮
-    };
+      codeHtml: '' // HTML代码高亮
+    }
   },
   methods: {
     // 导出代码
@@ -143,38 +140,54 @@ export default {
         code +=renderTag(el)
       })
       // 格式化代码
-      this.codeContent = this.$prettyDom(code)
+      this.codeHtml = this.$prettyDom(code)
       this.codeContentModal = true
+    },
+    // 复制代码
+    onCopy () {
+      this.$message({ /*这是使用了element-UI的信息弹框*/
+        message: '复制成功！',
+        type: 'success'
+      })
+    },
+    onError () {
+      this.$message({
+        message: '复制失败，请手动选择复制！',
+        type: 'error'
+      })
     },
     // https://github.com/SortableJS/Vue.Draggable#clone
     // 克隆,深拷贝对象
     cloneData(original) {
-      // 添加一个modal标题
-      original.obj.modalTitle = original.obj.label
       // 深拷贝对象，防止默认空对象被更改
       return JSON.parse(JSON.stringify(original));
     },
     // modal点击确定执行事件
     handleOk() {
-      const index = this.modalFormData.listIndex;
-      this.sortable_item[index].obj = Object.assign({},
-        this.sortable_item[index].obj,
-        this.modalFormData
-      );
-      this.handleCancel();
+      this.$refs['modalFormData'].validate((valid) => {
+        console.log(valid)
+        if (!valid) {return}
+        const index = this.modalFormData.listIndex;
+        this.sortable_item[index].obj = Object.assign({},
+          this.sortable_item[index].obj,
+          this.modalFormData
+        );
+        this.handleCancel();
+      })
     },
     // modal点击取消执行事件，清空当前modal内容
     handleCancel() {
-      this.showModal = false;
-      setTimeout(_ => {
-        this.modalFormData = {
-          color: '',
-          loading: false,
-          modalTitle: {
-            value: ''
-          }
+      this.$refs['modalFormData'].validate((valid) => {
+        if (!valid) {
+          this.removeEle(this.modalFormData.listIndex)
         }
-      }, 500)
+        this.showModal = false;
+        setTimeout(_ => {
+          this.modalFormData = {
+            loading: false
+          }
+        }, 500)
+      })
     },
     // 拖动结束
     addEle(event) {
@@ -182,13 +195,10 @@ export default {
     },
     // 显示modal,配置被克隆控件
     confEle(index) {
-      console.log(this.sortable_item[index])
       const list_temp = Object.assign({}, this.sortable_item[index]);
       for (let i in list_temp.obj) {
         this.modalFormData[i] = list_temp.obj[i];
       }
-      // 配置项中未找到color，删除modalFormData中自带color属性
-      if (!list_temp.obj['color']) delete this.modalFormData.color;
       // 设置被配置控件的index，便于完成配置找到相应对象赋值
       this.modalFormData.listIndex = index;
       // Vue 不能检测到对象属性的添加或删除
@@ -247,6 +257,7 @@ export default {
   }
 };
 </script>
+
 <style>
 
 .inline {

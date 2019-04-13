@@ -21,8 +21,8 @@ var getTemplate = function(info, _attr = {}, _slots = {}) {
     //没有class属性的，添加class属性
     if (!component.attributes.class) {
         component.attributes.class = {
-            type: 'text',
-                value: ''
+          type: 'text',
+          value: ''
         }
     }
 
@@ -59,22 +59,29 @@ var getSlotContent = function(slots) {
 }
 
 var getStringTypeAttr = function(attributes) {
-
     // value为空的不添加到模板中
     let stringAttr = ''
     for (let key in attributes)  {
-      const cancelArr = ['config', 'require', 'modalTitle', 'relation', 'items', 'ruleError']
-        if (cancelArr.includes(key)) {
+        if (attributes[key].ignore ) {
+          continue 
+        }
+        // 默认值不添加
+        if (attributes[key].default == attributes[key].value) {
           continue 
         }
         let attrKey
-        let arr = ['text', 'selection', 'icon','ionicon', 'color'] //这些类型都不用加bind
-        if (arr.includes(attributes[key].type) || attributes[key].notBind) {
+        let arr = ['input', 'radio'] //这些类型都不用加bind
+        if (arr.includes(attributes[key].type)) {
             attrKey = key
         } else {
             attrKey = `:${key}`
         }
         let attr = ''
+        if (attributes[key].type == 'radio') {
+          // 布尔值的
+          stringAttr += attrKey
+          continue 
+        }
         if (attributes[key]) {
           attr =  `${attrKey}="${attributes[key].value}"\n` 
         }

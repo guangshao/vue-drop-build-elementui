@@ -7,15 +7,6 @@ export default (_self, h) => {
         placeholder: _self.obj.placeholder.value || "这是一个输入框",
         maxlength: parseInt(_self.obj.maxLength.value) || 20,
         value: _self.obj.value.value || ""
-      },
-      on: {
-        "on-change": function(val) {
-          if (!_self.obj.prop.value) {
-            return false;
-          }
-          _self.obj.value.value= event.currentTarget.value;
-          _self.$emit('handleChangeVal', val.currentTarget.value)
-        }
       }
     })
   ];
@@ -31,31 +22,18 @@ export const input = (obj) => {
   //覆盖默认属性
   Object.assign(slots, {})
   const config = Object.assign(inputConf, obj)
-  const formItemconfig = {}
+  // formItem属性
   const formItemAttrArr = ['label', 'prop']
-  formItemAttrArr.forEach(key => {
-    console.log(config[key])
-    if (config[key]) {
-      formItemconfig[key] = JSON.parse(JSON.stringify(config[key]))
-    }
+  const formItemconfig = {}
+  formItemAttrArr.forEach(attr => {
+    formItemconfig[attr] = JSON.parse(JSON.stringify(config[attr]))
+    delete config[attr]
   })
-  //根据组件不同需要做的不同操作
-
-
-  //获取插槽模板内容
-  // var subContent = getSlotContent(slots)
-  //   //设置当前组件的slot
-  // if (attributes.slot && attributes.slot !== 'default') {
-  //   attributes.slot = {
-  //       type: 'text',
-  //       value: attributes.slot
-  //   }
-  // } else {
-  //   attributes.slot = {
-  //       type: 'text',
-  //       value: ''
-  //   }
-  // }
+  formItemconfig['label'] = JSON.parse(JSON.stringify(config['label']))
+  if (!!obj.prop.value && !!obj.require.value) {
+    formItemconfig['prop'] = JSON.parse(JSON.stringify(config['prop']))
+    delete config.prop
+  }
   let stringAttr = getStringTypeAttr(config)
   let formItemAttr = getStringTypeAttr(formItemconfig)
   console.log(stringAttr)
@@ -70,52 +48,66 @@ export const input = (obj) => {
 export let inputConf = {
   // 对应数据库内类型
   type: {
-    type: 'text',
-    value: 'text'
+    type: 'input',
+    value: 'text',
+    ignore: true
   },
-  // 是否可配置
-  config: {
-    type: 'Boolean',
-    value: true
+  modalTitle: {
+    type: 'input',
+    value: '输入框',
+    ignore: true
   },
   // 控件左侧label内容
   label: {
-    type: 'text',
-    value: '输入框'
+    type: 'input',
+    value: '输入框',
   },
   placeholder: {
-    type: 'text',
-    value: ''
-  },
-  // 是否必填
-  require: {
-    type: 'text',
-    value: true
+    type: 'input',
+    value: '',
   },
   // 最大长度
   maxLength: {
-    type: 'text',
+    type: 'input',
     value: 20
   },
-  // 选项内数据
-  items: [{ "label_value": null, "label_name": "" }],
   value: {
-    type: 'text',
+    type: 'input',
     value: ''
   },
   // 表单关联字段
   prop: {
-    type: 'text',
+    type: 'input',
     value: ''
   },
   // 验证错误提示信息
   ruleError: {
-    type: 'text',
-    value: '该字段不能为空'
+    type: 'input',
+    value: '该字段不能为空',
+    ignore: true
+  },
+  // 是否必填
+  require: {
+    type: 'radio',
+    value: true,
+    ignore: true
   },
   // 是否关联字段
   relation: {
-    type: 'String',
+    type: 'radio',
+    default: false,
+    value: false
+  },
+  // 是否显示可清空按钮
+  clearable: {
+    type: 'radio',
+    default: false,
+    value: false
+  },
+  //  是否只读
+  readonly: {
+    type: 'radio',
+    default: false,
     value: false
   }
 }
