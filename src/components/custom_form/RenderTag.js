@@ -1,4 +1,3 @@
-import { getTemplate } from '../template'
 import {input} from './control/Input';
 
 const form_item = {

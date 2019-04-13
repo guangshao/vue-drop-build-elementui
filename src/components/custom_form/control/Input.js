@@ -2,7 +2,7 @@ import { getTemplate, getSlotContent, getStringTypeAttr } from '@/components/tem
 
 export default (_self, h) => {
   return [
-    h("Input", {
+    h("ElInput", {
       props: {
         placeholder: _self.obj.placeholder.value || "这是一个输入框",
         maxlength: parseInt(_self.obj.maxLength.value) || 20,
@@ -10,7 +10,7 @@ export default (_self, h) => {
       },
       on: {
         "on-change": function(val) {
-          if (!_self.obj.name.value) {
+          if (!_self.obj.prop.value) {
             return false;
           }
           _self.obj.value.value= event.currentTarget.value;
@@ -24,8 +24,8 @@ export default (_self, h) => {
 export const input = (obj) => {
   //定义默认属性
   let slots = {
-      prepend:[],
-      append:[]
+    prepend:[],
+    append:[]
   }
 
   //覆盖默认属性
@@ -37,7 +37,6 @@ export const input = (obj) => {
     console.log(config[key])
     if (config[key]) {
       formItemconfig[key] = JSON.parse(JSON.stringify(config[key]))
-      delete config[key]
     }
   })
   //根据组件不同需要做的不同操作
@@ -118,20 +117,5 @@ export let inputConf = {
   relation: {
     type: 'String',
     value: false
-  },
-  // 关联字段name
-  relation_name: {
-    type: 'text',
-    value: ''
-  },
-  // 关联字段value
-  relation_value: {
-    type: 'text',
-    value: ''
-  },
-  // 是否被渲染
-  visibility: {
-    type: 'text',
-    value: true
   }
 }

@@ -2,11 +2,11 @@ export default (_self, h) => {
   let icons = [];
   // 配置按钮
   if (!!_self.obj.config) {
-    icons.push(h('Icon', {
-      props: {
-        type: 'md-hammer',
+    icons.push(h('i', {
+      class: {
+        'el-icon-menu': true,
       },
-      nativeOn: {
+      on: {
         click() {
           _self.$emit('handleConfEle', _self.index);
         }
@@ -14,11 +14,11 @@ export default (_self, h) => {
     }));
   }
   // 删除按钮
-  icons.push(h('Icon', {
-    props: {
-      type: 'md-trash'
+  icons.push(h('i', {
+    class: {
+      'el-icon-delete': true,
     },
-    nativeOn: {
+    on: {
       click() {
         _self.$emit('handleRemoveEle', _self.index);
       }

@@ -17,7 +17,6 @@ import pretty from 'pretty'
 Vue.prototype.$prettyDom = pretty
 Vue.config.productionTip = false
 Vue.use(ElementUI);
-Vue.use(cascaderMulti);
 Vue.use(custom_form);
 
 // axios.defaults.baseURL = '/apis';

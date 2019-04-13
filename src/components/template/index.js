@@ -63,7 +63,7 @@ var getStringTypeAttr = function(attributes) {
     // value为空的不添加到模板中
     let stringAttr = ''
     for (let key in attributes)  {
-      const cancelArr = ['config', 'visibility', 'require']
+      const cancelArr = ['config', 'require', 'modalTitle', 'relation', 'items', 'ruleError']
         if (cancelArr.includes(key)) {
           continue 
         }
@@ -74,7 +74,10 @@ var getStringTypeAttr = function(attributes) {
         } else {
             attrKey = `:${key}`
         }
-        let attr = attributes[key] ? `${attrKey}="${attributes[key].value}"\n` : ''
+        let attr = ''
+        if (attributes[key]) {
+          attr =  `${attrKey}="${attributes[key].value}"\n` 
+        }
         stringAttr += attr
     }
     return stringAttr

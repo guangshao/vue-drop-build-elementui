@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "async-validator": "^1.11.0",
     "axios": "^0.18.0",
     "dayjs": "^1.8.11",
     "element-china-area-data": "^4.1.2",
