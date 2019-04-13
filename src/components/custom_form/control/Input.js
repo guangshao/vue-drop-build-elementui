@@ -22,18 +22,17 @@ export const input = (obj) => {
   //覆盖默认属性
   Object.assign(slots, {})
   const config = Object.assign(inputConf, obj)
+  config['v-model'] = JSON.parse(JSON.stringify(config['prop']))
   // formItem属性
-  const formItemAttrArr = ['label', 'prop']
+  const formItemAttrArr = ['label']
   const formItemconfig = {}
+  if (!!obj.require.value) {
+    formItemconfig['prop'] = JSON.parse(JSON.stringify(config['prop']))
+    delete config['prop']
+  }
   formItemAttrArr.forEach(attr => {
     formItemconfig[attr] = JSON.parse(JSON.stringify(config[attr]))
-    delete config[attr]
   })
-  formItemconfig['label'] = JSON.parse(JSON.stringify(config['label']))
-  if (!!obj.prop.value && !!obj.require.value) {
-    formItemconfig['prop'] = JSON.parse(JSON.stringify(config['prop']))
-    delete config.prop
-  }
   let stringAttr = getStringTypeAttr(config)
   let formItemAttr = getStringTypeAttr(formItemconfig)
   console.log(stringAttr)
@@ -48,55 +47,54 @@ export const input = (obj) => {
 export let inputConf = {
   // 对应数据库内类型
   type: {
-    type: 'input',
+    type: 'text',
     value: 'text',
     ignore: true
   },
   modalTitle: {
-    type: 'input',
+    type: 'text',
     value: '输入框',
     ignore: true
   },
   // 控件左侧label内容
   label: {
-    type: 'input',
+    type: 'text',
     value: '输入框',
+    ignore: true
   },
   placeholder: {
-    type: 'input',
+    type: 'text',
     value: '',
   },
   // 最大长度
   maxLength: {
-    type: 'input',
+    type: 'text',
     value: 20
   },
   value: {
-    type: 'input',
+    type: 'text',
     value: ''
   },
   // 表单关联字段
   prop: {
-    type: 'input',
+    type: 'text',
     value: ''
   },
   // 验证错误提示信息
   ruleError: {
-    type: 'input',
+    type: 'text',
     value: '该字段不能为空',
     ignore: true
+  },
+  '@change': {
+    type: 'text',
+    value: ''
   },
   // 是否必填
   require: {
     type: 'radio',
     value: true,
     ignore: true
-  },
-  // 是否关联字段
-  relation: {
-    type: 'radio',
-    default: false,
-    value: false
   },
   // 是否显示可清空按钮
   clearable: {
@@ -110,4 +108,5 @@ export let inputConf = {
     default: false,
     value: false
   }
+  
 }

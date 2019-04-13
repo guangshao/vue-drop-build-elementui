@@ -70,7 +70,7 @@ var getStringTypeAttr = function(attributes) {
           continue 
         }
         let attrKey
-        let arr = ['input', 'radio'] //这些类型都不用加bind
+        let arr = ['text', 'radio'] //这些类型都不用加bind
         if (arr.includes(attributes[key].type)) {
             attrKey = key
         } else {
@@ -79,7 +79,7 @@ var getStringTypeAttr = function(attributes) {
         let attr = ''
         if (attributes[key].type == 'radio') {
           // 布尔值的
-          stringAttr += attrKey
+          stringAttr += `${attrKey}\n` 
           continue 
         }
         if (attributes[key]) {

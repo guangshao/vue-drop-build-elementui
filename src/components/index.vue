@@ -46,6 +46,9 @@
         <el-form-item label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'" prop="placeholder.value" key="placeholder">
           <el-input v-model="modalFormData.placeholder.value" placeholder="请输入placeholder"></el-input >
         </el-form-item> 
+        <el-form-item label="事件绑定：" v-if="typeof modalFormData['@change'] != 'undefined'">
+          <el-input v-model="modalFormData['@change'].value" placeholder="事件绑定"></el-input >
+        </el-form-item> 
         <el-form-item label="最大长度：" v-if="typeof modalFormData.maxLength != 'undefined'" prop="maxLength.value" key="maxLength">
           <el-input-number v-model="modalFormData.maxLength.value" placeholder="请输入文本限制最大长度">
           </el-input-number>

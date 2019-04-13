@@ -14,7 +14,7 @@ export default {
     // 显示配置按钮并且控件允许被配置
     const item_icon = this.configIcon ? ItemIcon(this, h) : [];
     // 已被绑定prop,且require为必填,视为校验字段
-    const validate = !!this.obj.prop.value && !!this.obj.require.value;
+    const validate = !!this.obj.require.value;
     // 非 Title Hr P 需要FormItem
     if (['title', 'hr', 'p'].indexOf((this.ele.toLowerCase())) < 0) {
       let FormItem = {
