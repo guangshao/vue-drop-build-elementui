@@ -1,4 +1,4 @@
-import { getTemplate, getSlotContent, getStringTypeAttr } from '@/components/template'
+import { getStringTypeAttr } from '@/components/template'
 
 export default (_self, h) => {
   return [
@@ -12,45 +12,13 @@ export default (_self, h) => {
   ];
 };
 
-export const input = (obj) => {
-  //定义默认属性
-  let slots = {
-    prepend:[],
-    append:[]
-  }
-
-  //覆盖默认属性
-  Object.assign(slots, {})
+export const inputTag = (obj) => {
   const config = Object.assign(inputConf, obj)
-  config['v-model'] = JSON.parse(JSON.stringify(config['prop']))
-  // formItem属性
-  const formItemAttrArr = ['label']
-  const formItemconfig = {}
-  if (!!obj.require.value) {
-    formItemconfig['prop'] = JSON.parse(JSON.stringify(config['prop']))
-    delete config['prop']
-  }
-  formItemAttrArr.forEach(attr => {
-    formItemconfig[attr] = JSON.parse(JSON.stringify(config[attr]))
-  })
-  let stringAttr = getStringTypeAttr(config)
-  let formItemAttr = getStringTypeAttr(formItemconfig)
-  console.log(stringAttr)
-  let template = `<el-form-item ${formItemAttr}>
-                    <el-input 
-                      ${stringAttr}>
-                    </el-input>
-                  </el-form-item>`
-  return template
+  return `<el-input ${getStringTypeAttr(config)}>
+          </el-input>`
 };
 
 export let inputConf = {
-  // 对应数据库内类型
-  type: {
-    type: 'text',
-    value: 'text',
-    ignore: true
-  },
   modalTitle: {
     type: 'text',
     value: '输入框',
@@ -76,7 +44,7 @@ export let inputConf = {
     value: ''
   },
   // 表单关联字段
-  prop: {
+  'v-model': {
     type: 'text',
     value: ''
   },
@@ -108,5 +76,4 @@ export let inputConf = {
     default: false,
     value: false
   }
-  
 }

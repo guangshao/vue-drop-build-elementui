@@ -4,7 +4,7 @@
       <el-col :span="12" >
         <el-form :label-width="`${labelWidth}px`" class="b-a form-list-group">
           <el-form-item label="label-width">
-            <el-input v-model.number="labelWidth"></el-input>
+            <el-input v-model.number="labelWidth" readonly></el-input>
           </el-form-item>
           <draggable :clone="cloneData" :list="form_list" :options="dragOptions1">
             <transition-group type="transition" :name="'flip-list'" tag="div">
@@ -29,6 +29,7 @@
               </renders>
             </transition-group>
           </draggable>
+          <hr/>
           <el-form-item>
             <el-button @click="handleExport()">导出HTML</el-button>
           </el-form-item> 
@@ -40,14 +41,17 @@
         <el-form-item label="控件名称：" v-if="typeof modalFormData.label != 'undefined'" prop="label.value" key="label">
           <el-input v-model="modalFormData.label.value" placeholder="请输入控件名称"></el-input >
         </el-form-item> 
-        <el-form-item label="关联字段" v-if="typeof modalFormData.prop != 'undefined'" prop="prop.value" key="prop">
-          <el-input v-model="modalFormData.prop.value" placeholder="v-model值"></el-input >
+        <el-form-item label="关联字段" v-if="typeof modalFormData['v-model'] != 'undefined'" prop="v-model.value" key="prop">
+          <el-input v-model="modalFormData['v-model'].value" placeholder="v-model值"></el-input >
         </el-form-item> 
         <el-form-item label="placeholder：" v-if="typeof modalFormData.placeholder != 'undefined'" prop="placeholder.value" key="placeholder">
           <el-input v-model="modalFormData.placeholder.value" placeholder="请输入placeholder"></el-input >
         </el-form-item> 
         <el-form-item label="事件绑定：" v-if="typeof modalFormData['@change'] != 'undefined'">
           <el-input v-model="modalFormData['@change'].value" placeholder="事件绑定"></el-input >
+        </el-form-item> 
+        <el-form-item label="数据源：" v-if="typeof modalFormData.dataSource != 'undefined'">
+          <el-input v-model="modalFormData.dataSource.value" placeholder="枚举数据源"></el-input >
         </el-form-item> 
         <el-form-item label="最大长度：" v-if="typeof modalFormData.maxLength != 'undefined'" prop="maxLength.value" key="maxLength">
           <el-input-number v-model="modalFormData.maxLength.value" placeholder="请输入文本限制最大长度">

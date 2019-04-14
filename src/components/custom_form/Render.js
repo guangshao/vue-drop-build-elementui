@@ -1,9 +1,5 @@
 import ItemIcon from './ItemIcon';
-import input from './control/Input';
-
-const form_item = {
-  input,
-};
+import {form_item} from './FormList';
 
 export default {
   name: 'renders',
@@ -15,36 +11,21 @@ export default {
     const item_icon = this.configIcon ? ItemIcon(this, h) : [];
     // 已被绑定prop,且require为必填,视为校验字段
     const validate = !!this.obj.require.value;
-    // 非 Title Hr P 需要FormItem
-    if (['title', 'hr', 'p'].indexOf((this.ele.toLowerCase())) < 0) {
-      let FormItem = {
-        class: {
-          'el-form-item': true,
-          'is-required': validate
-        },
-        props: {
-          label: this.obj.label.value + '：',
-          // 指定验证name
-          prop: this.obj.prop.value,
-        }
-      };
-      return h(
-        "ElFormItem", FormItem,
-        arr.concat(item_icon)
-      );
-    } else {
-      return h(
-        "div", {
-          style: {
-            'position': 'relative'
-          },
-          class: {
-            items: true
-          },
-        },
-        arr.concat(item_icon)
-      );
-    }
+    let FormItem = {
+      class: {
+        'el-form-item': true,
+        'is-required': validate
+      },
+      props: {
+        label: this.obj.label.value + '：',
+        // 指定验证name
+        prop: this.obj['v-model'].value,
+      }
+    };
+    return h(
+      "ElFormItem", FormItem,
+      arr.concat(item_icon)
+    );
   },
   props: {
     // 当前控件的类型

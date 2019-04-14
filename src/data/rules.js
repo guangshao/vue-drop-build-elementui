@@ -2,7 +2,7 @@ export const formRules = {
   'label.value': [
     { required: true, message: '请输入控件名称', trigger: 'blur' },
   ],
-  'prop.value': [
+  'v-model.value': [
     { required: true, message: '请输入关联字段名', trigger: 'blur' },
   ],
   'placeholder.value': [

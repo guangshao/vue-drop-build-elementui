@@ -82,7 +82,7 @@ var getStringTypeAttr = function(attributes) {
           stringAttr += `${attrKey}\n` 
           continue 
         }
-        if (attributes[key]) {
+        if (attributes[key].value) {
           attr =  `${attrKey}="${attributes[key].value}"\n` 
         }
         stringAttr += attr

@@ -1,11 +1,9 @@
-import {input} from './control/Input';
-
-const form_item = {
-  input
-};
+import {formItem} from './control/FormItem'
 
 const renderTag = function({ele, obj}) {
-  const code = form_item[ele.toLowerCase()] && form_item[ele.toLowerCase()](obj);
+  console.log(obj)
+
+  const code = formItem(ele, obj);
   return code
 }
 
