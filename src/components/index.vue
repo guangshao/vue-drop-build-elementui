@@ -50,25 +50,9 @@
         <el-form-item label="数据源：" v-if="typeof modalFormData.dataSource != 'undefined'" prop="dataSource.value" >
           <el-input v-model="modalFormData.dataSource.value" placeholder="枚举数据源"></el-input >
         </el-form-item> 
-        <el-form-item label="事件绑定：" v-if="typeof modalFormData['@change'] != 'undefined'">
-          <el-input v-model="modalFormData['@change'].value" placeholder="事件绑定"></el-input >
-        </el-form-item> 
-        <el-form-item label="最大长度：" v-if="typeof modalFormData.maxLength != 'undefined'" prop="maxLength.value" key="maxLength">
+        <el-form-item label="字数长度：" v-if="typeof modalFormData.maxLength != 'undefined'" prop="maxLength.value" key="maxLength">
           <el-input-number v-model="modalFormData.maxLength.value" placeholder="请输入文本限制最大长度">
           </el-input-number>
-        </el-form-item> 
-        <el-form-item label="最大限制：" v-if="typeof modalFormData.maxSize != 'undefined'" prop="maxSize.value" key="maxSize">
-          <el-input-number :formatter="value => `${value}kb`" :parser="value => value.replace('kb', '')" v-model="modalFormData.maxSize.value" placeholder="请输入上传文件最大限制">
-          </el-input-number>
-        </el-form-item> 
-        <el-form-item label="详细地址：" v-if="typeof modalFormData.details_address != 'undefined'">
-          <el-checkbox v-model="modalFormData.details_address.value">是否需要详细地址</el-checkbox>
-        </el-form-item> 
-        <el-form-item label="删除按钮：" v-if="typeof modalFormData.clearable != 'undefined'">
-          <el-radio-group v-model="modalFormData.clearable.value">
-            <el-radio :label="true">显示</el-radio>
-            <el-radio :label="false">隐藏</el-radio>
-          </el-radio-group>
         </el-form-item> 
         <el-form-item label="是否必填：" v-if="typeof modalFormData.require != 'undefined'">
           <el-radio-group v-model="modalFormData.require.value">
@@ -79,6 +63,35 @@
         <el-form-item label="校验错误：" v-if="typeof modalFormData.ruleError != 'undefined' && modalFormData.require.value">
           <el-input v-model="modalFormData.ruleError.value" placeholder="请输入校验错误提示"></el-input >
         </el-form-item> 
+        <el-form-item label="显示行数：" v-if="typeof modalFormData.row != 'undefined'" >
+          <el-input v-model="modalFormData.row.value" placeholder="显示行数"></el-input >
+        </el-form-item> 
+        <el-form-item label="自适应高度" v-if="typeof modalFormData.autosize != 'undefined'" >
+          <el-radio-group v-model="modalFormData.autosize.value">
+            <el-radio :label="true">开启</el-radio>
+            <el-radio :label="false">关闭</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="行数区间" v-if="typeof modalFormData.autosize != 'undefined' && modalFormData.autosize.value" >
+          <div class="interregional" >
+            <el-input v-model.number="modalFormData.minRows.value" placeholder="最小行数"></el-input >
+            <span> - </span>
+            <el-input v-model.number="modalFormData.maxRows.value" placeholder="最大行数"></el-input >
+          </div>
+        </el-form-item> 
+        <el-form-item label="事件绑定：" v-if="typeof modalFormData['@change'] != 'undefined'">
+          <el-input v-model="modalFormData['@change'].value" placeholder="事件绑定"></el-input >
+        </el-form-item> 
+        <el-form-item label="最大限制：" v-if="typeof modalFormData.maxSize != 'undefined'" prop="maxSize.value" key="maxSize">
+          <el-input-number :formatter="value => `${value}kb`" :parser="value => value.replace('kb', '')" v-model="modalFormData.maxSize.value" placeholder="请输入上传文件最大限制">
+          </el-input-number>
+        </el-form-item> 
+        <el-form-item label="删除按钮：" v-if="typeof modalFormData.clearable != 'undefined'">
+          <el-radio-group v-model="modalFormData.clearable.value">
+            <el-radio :label="true">显示</el-radio>
+            <el-radio :label="false">隐藏</el-radio>
+          </el-radio-group>
+        </el-form-item> 
         <el-form-item label="是否多选：" v-if="typeof modalFormData.multiple != 'undefined' && modalFormData.type != 'address'">
           <el-checkbox v-model="modalFormData.multiple.value">多选</el-checkbox>
         </el-form-item> 
@@ -87,9 +100,6 @@
             <el-radio label="yyyy年MM月dd日"></el-radio>
             <el-radio label="yyyy-MM-dd HH:mm"></el-radio>
           </el-radio-group>
-        </el-form-item> 
-        <el-form-item label="显示行数：" v-if="typeof modalFormData.maxRows != 'undefined'">
-          <Slider v-model="modalFormData.maxRows.value" :min="2" :max="10"></Slider>
         </el-form-item> 
       </el-form>
       <div slot="footer">
@@ -346,5 +356,13 @@ export default {
 
 .form_content .el-form-item:last-child {
   margin-bottom: 0;
+}
+
+.interregional {
+  display: flex;
+}
+.interregional span {
+  width: 50px;
+  text-align: center;
 }
 </style>
