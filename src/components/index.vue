@@ -31,7 +31,8 @@
           </draggable>
           <hr/>
           <el-form-item>
-            <el-button @click="handleExport()">导出HTML</el-button>
+            <el-button @click="exportHtml()">导出HTML</el-button>
+            <el-button @click="exportJs()">导出JS</el-button>
           </el-form-item> 
         </el-form>
       </el-col>
@@ -92,6 +93,29 @@
             <el-radio :label="false">隐藏</el-radio>
           </el-radio-group>
         </el-form-item>
+        <el-form-item label="日期类型：" v-if="typeof modalFormData.type != 'undefined'">
+          <el-radio-group v-model="modalFormData.type.value">
+            <template v-if="modalFormData.type.style === 1">
+              <el-radio label="year">年</el-radio>
+              <el-radio label="month">月</el-radio>
+              <el-radio label="date">日</el-radio>
+              <el-radio label="dates">多个日期</el-radio>
+              <el-radio label="week">周</el-radio>
+              <el-radio label="datetime">日期+时间</el-radio>
+            </template>
+            <template v-else>
+              <el-radio label="datetimerange">日期和时间范围</el-radio>
+              <el-radio label="daterange">日期范围</el-radio>
+              <el-radio label="monthrange">月份范围</el-radio>
+            </template>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="开始提示语：" v-if="typeof modalFormData['start-placeholder'] != 'undefined'">
+          <el-input v-model="modalFormData['start-placeholder'].value" placeholder="请输入开始提示语"></el-input >
+        </el-form-item> 
+        <el-form-item label="结束提示语：" v-if="typeof modalFormData['end-placeholder'] != 'undefined'">
+          <el-input v-model="modalFormData['end-placeholder'].value" placeholder="请输入结束提示语"></el-input >
+        </el-form-item> 
         <el-form-item label="是否可搜索：" v-if="typeof modalFormData.filterable != 'undefined'">
           <el-radio-group v-model="modalFormData.filterable.value">
             <el-radio :label="true">YES</el-radio>
@@ -156,8 +180,18 @@ export default {
     }
   },
   methods: {
+    // 导出js
+    exportJs() {
+      let code = ''
+      this.sortable_item.forEach(el => {
+        code +=renderJs(el)
+      })
+      // 格式化代码
+      this.codeJs = this.$prettyDom(code)
+      this.codeContentModal = true
+    },
     // 导出代码
-    handleExport() {
+    exportHtml() {
       let code = ''
       this.sortable_item.forEach(el => {
         code +=renderTag(el)
@@ -282,7 +316,6 @@ export default {
 </script>
 
 <style>
-
 .inline {
   display: inline-block;
 }

@@ -1,5 +1,4 @@
 import render from "./Render";
-import renderForm from "./RenderForm";
 import uploadCustom from './components/Uploads/upload';
 
 const customForm = {
@@ -9,7 +8,6 @@ const customForm = {
 
 const install = function(Vue, opts = {}) {
   Vue.component(render.name, render);
-  Vue.component(renderForm.name, renderForm);
   Vue.component(uploadCustom.name, uploadCustom);
 };
 

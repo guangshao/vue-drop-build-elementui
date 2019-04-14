@@ -5,7 +5,7 @@ export default (_self, h) => {
   return [
     h('ElCascader', {
       props: {
-        placeholder: _self.obj.placeholder.value || "请选择区域",
+        placeholder: _self.obj.placeholder.value,
         options: regionData,
         value: _self.obj.value || [],
         filterable: false,

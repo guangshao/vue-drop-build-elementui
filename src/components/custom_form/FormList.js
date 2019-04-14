@@ -4,6 +4,20 @@ import radiogroup, { radioGroupConf, radioGroupTag } from "./control/RadioGroup"
 import checkboxgroup, { checkboxGroupConf, checkboxGroupTag } from "./control/CheckboxGroup";
 import select, { selectConf, selectTag } from "./control/Select";
 import address, { addressConf, addressTag } from "./control/Address";
+import datepicker, { datePickerConf, datePickerTag } from "./control/DatePicker";
+import datepickermerange, { datePickerMerangeConf, datePickerMerangeTag } from "./control/DatePickerMerange";
+
+
+export const form_item = {
+  input,
+  textarea,
+  radiogroup,
+  checkboxgroup,
+  select,
+  address,
+  datepicker,
+  datepickermerange
+}
 
 export const form_tag = {
   input: inputTag,
@@ -11,17 +25,10 @@ export const form_tag = {
   radiogroup: radioGroupTag,
   checkboxgroup: checkboxGroupTag,
   select: selectTag,
-  address: addressTag
+  address: addressTag,
+  datepicker: datePickerTag,
+  datepickermerange: datePickerMerangeTag
 }
-export const form_item = {
-  input,
-  textarea,
-  radiogroup,
-  checkboxgroup,
-  select,
-  address
-}
-
 
 const formConf = {
   input: inputConf,
@@ -29,7 +36,9 @@ const formConf = {
   radiogroup: radioGroupConf,
   checkboxgroup: checkboxGroupConf,
   select: selectConf,
-  address: addressConf
+  address: addressConf,
+  datepicker: datePickerConf,
+  datepickermerange: datePickerMerangeConf
 };
 let list_arr = [];
 for (let i in formConf) {
