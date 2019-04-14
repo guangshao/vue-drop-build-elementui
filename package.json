@@ -1,8 +1,8 @@
 {
-  "name": "vue-formbuilder",
+  "name": "vue-drop-build",
   "version": "1.0.0",
-  "description": "A Vue.js project",
-  "author": "mrabit <biabia123456@126.com>",
+  "description": "拖拽生成表单代码",
+  "author": "黄少光 <120894802@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",

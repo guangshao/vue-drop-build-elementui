@@ -39,13 +39,13 @@ const selectConfig = {
   },
   modalTitle: {
     type: 'text',
-    value: '多选框',
+    value: '下拉框',
     ignore: true
   },
   // 控件左侧label内容
   label: {
     type: 'text',
-    value: '多选框',
+    value: '下拉框',
     ignore: true
   },
   // 表单关联字段

@@ -91,6 +91,12 @@
             <el-radio :label="true">显示</el-radio>
             <el-radio :label="false">隐藏</el-radio>
           </el-radio-group>
+        </el-form-item>
+        <el-form-item label="是否可搜索：" v-if="typeof modalFormData.filterable != 'undefined'">
+          <el-radio-group v-model="modalFormData.filterable.value">
+            <el-radio :label="true">YES</el-radio>
+            <el-radio :label="false">NO</el-radio>
+          </el-radio-group>
         </el-form-item> 
         <el-form-item label="是否多选：" v-if="typeof modalFormData.multiple != 'undefined' && modalFormData.type != 'address'">
           <el-checkbox v-model="modalFormData.multiple.value">多选</el-checkbox>
