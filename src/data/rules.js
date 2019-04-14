@@ -10,5 +10,8 @@ export const formRules = {
   ],
   'maxLength.value': [
     { required: true, message: '请输入最大字数限制', trigger: 'blur' },  
+  ],
+  'dataSource.value': [
+    { required: true, message: '请输入数据源', trigger: 'blur' },  
   ]
 }

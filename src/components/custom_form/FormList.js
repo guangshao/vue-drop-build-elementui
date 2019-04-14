@@ -1,23 +1,27 @@
 import input, { inputConf, inputTag } from "./control/Input";
 import radiogroup, { radioGroupConf, radioGroupTag } from "./control/RadioGroup";
 import checkboxgroup, { checkboxGroupConf, checkboxGroupTag } from "./control/CheckboxGroup";
+import select, { selectConf, selectTag } from "./control/Select";
 
 export const form_tag = {
   input: inputTag,
   radiogroup: radioGroupTag,
   checkboxgroup: checkboxGroupTag,
+  select: selectTag
 }
 export const form_item = {
   input,
   radiogroup,
-  checkboxgroup
+  checkboxgroup,
+  select,
 }
 
 
 const formConf = {
   input: inputConf,
   radiogroup: radioGroupConf,
-  checkboxgroup: checkboxGroupConf
+  checkboxgroup: checkboxGroupConf,
+  select: selectConf
 };
 let list_arr = [];
 for (let i in formConf) {
