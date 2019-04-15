@@ -152,6 +152,7 @@
 import draggable from "vuedraggable";
 import form_list from "./custom_form/FormList";
 import renderTag from "./custom_form/renderTag";
+import renderJs from "./custom_form/renderJs";
 import {formRules} from "../data/rules";
 
 // 代码高亮样式
@@ -183,9 +184,7 @@ export default {
     // 导出js
     exportJs() {
       let code = ''
-      this.sortable_item.forEach(el => {
-        code +=renderJs(el)
-      })
+      renderJs(this.sortable_item)
       // 格式化代码
       this.codeJs = this.$prettyDom(code)
       this.codeContentModal = true
