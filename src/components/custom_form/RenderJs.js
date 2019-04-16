@@ -1,4 +1,4 @@
-const renderTag = function(sortable_item) {
+const renderJs = function(sortable_item) {
   let data = {}
   let code = `data () {
                 return ${data}
@@ -8,27 +8,43 @@ const renderTag = function(sortable_item) {
     let parentObj = {}
     // 关联字段是否为对象属性
     const dataArr = item['v-model'].split('.')
+    dataArr.forEach(data => {
+      
+    })
+
     const len = dataArr.length
     let i = 1
-    do {
-      parentObj = data[dataArr[0]] = {}
-    } while (i < len) {
+    while (i < len) {
       const key = dataArr[i]
-      parentObj[key] = {}
-    }
-    for (let i = 1; i < len; i++) {
-      if (i === len - 1) {
-        dataArr[key] = ''
-      } else {
-        parentObj = createObj(parentObj, key)
+      if (parentObj[key]) {
+        continue
       }
+      parentObj[key] = {}
+      data = parentObj
+      i++
     }
+
   })
 
   return code
 }
 
-function createObj(parentObj, key) {
-  return parentObj[key] = {}
+function createObj (arr, index) {
+
+  const obj = {}
+  if (arr.length > ++index) {
+    obj[arr[index]] = createObj()
+
+  } else {
+    obj[arr[index]] = ''
+  }
+  return obj
 }
-export default renderTag
+
+export default renderJs
+
+{
+  let arr = ['a', 'b', 'c'],
+      obj = {}
+  arr + obj => obj[arr[0]][arr[1]][arr[2]] = ''
+}
