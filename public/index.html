@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<link rel="icon" type="image/png" href="//wg.cloud.ininin.com/DSS-20200119.png" />
+		<link rel="dns-prefetch" href="//dss.ininin.com" />
+		<link rel="dns-prefetch" href="//wg.cloud.ininin.com" />
+		<title>数字化营销系统</title>
+		<script>
+			(function() {
+				var designWidth = 1920;
+				var timer = null;
+				var docEl = document.documentElement;
+
+				function setBodyFontSize() {
+					if (document.body) {
+						document.body.style.fontSize = 14 + "px";
+						// document.body.style.fontSize = '0.14rem'
+					} else {
+						document.addEventListener("DOMContentLoaded", setBodyFontSize);
+					}
+				}
+
+				setBodyFontSize();
+
+				function remInit() {
+					docEl.style.fontSize = (docEl.clientWidth / designWidth) * 100 + "px";
+				}
+
+				remInit();
+				window.addEventListener("resize", function() {
+					clearTimeout(timer); //防止执行两次
+					timer = setTimeout(remInit, 20);
+				});
+				window.addEventListener("pageshow", function(e) {
+					if (e.persisted) {
+						remInit();
+					}
+				});
+				window._czc = { push() {} };
+			})();
+		</script>
+		<% htmlWebpackPlugin.options.cdnConfig.forEach(function(item){ if(item.css){ %>
+		<link href="<%= item.css %>" rel="stylesheet" />
+		<% }}) %>
+		<style type="text/css">
+			/* 去除站长统计 */
+			body > a {
+				display: none;
+			}
+			.spinner {
+				width: 60px;
+				height: 60px;
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				margin: -40px 0 0 -40px;
+			}
+
+			.double-bounce1,
+			.double-bounce2 {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+				background-color: #5981fa;
+				opacity: 0.6;
+				position: absolute;
+				top: 0;
+				left: 0;
+
+				-webkit-animation: bounce 2s infinite ease-in-out;
+				animation: bounce 2s infinite ease-in-out;
+			}
+
+			.double-bounce2 {
+				-webkit-animation-delay: -1s;
+				animation-delay: -1s;
+			}
+
+			@-webkit-keyframes bounce {
+				0%,
+				100% {
+					-webkit-transform: scale(0);
+				}
+
+				50% {
+					-webkit-transform: scale(1);
+				}
+			}
+
+			@keyframes bounce {
+				0%,
+				100% {
+					transform: scale(0);
+					ansform: scale(0);
+				}
+
+				50% {
+					transform: scale(1);
+					-webkit-transform: scale(1);
+				}
+			}
+
+			.nonsupport {
+				width: 100%;
+				min-height: 480px;
+				overflow: hidden;
+				text-align: center;
+			}
+
+			.nonsupport a {
+				text-decoration: none;
+			}
+
+			.nonsupport h3 {
+				height: 80px;
+				line-height: 80px;
+				text-align: center;
+				font-weight: 700;
+				font-size: 15px;
+				margin: 15px 0;
+				color: #000;
+			}
+
+			.nonsupport .p {
+				font-size: 13px;
+				padding-bottom: 30px;
+				text-align: center;
+				margin: 13px 0;
+			}
+
+			.nonsupport .browser {
+				width: 1000px;
+				margin: 0 auto;
+				padding: 0;
+				list-style: none;
+			}
+
+			.nonsupport .download-browser {
+				vertical-align: top;
+				float: left;
+				margin: 0;
+				padding: 0;
+				width: 25%;
+				text-align: center;
+			}
+
+			.nonsupport ul {
+				list-style: none;
+			}
+
+			.nonsupport li {
+				font-size: 20px;
+				line-height: 26px;
+				text-align: center;
+				color: #333;
+				padding-top: 20px;
+			}
+
+			.nonsupport img {
+				border: none;
+			}
+
+			.nonsupport .help-text {
+				color: #666;
+				font-size: 14px;
+			}
+
+			.nonsupport .app {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<noscript>
+			<strong
+				>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly
+				without JavaScript enabled. Please enable it to continue.</strong
+			>
+		</noscript>
+		<div id="app">
+			<div class="spinner">
+				<div class="double-bounce1"></div>
+				<div class="double-bounce2"></div>
+			</div>
+			<div id="nonsupport" style="display: none">
+				<div class="nonsupport">
+					<h3>
+						您使用的浏览器版本过低，可能导致部分页面展示效果不佳，建议您使用以下浏览器进行访问。
+					</h3>
+					<p class="p">点击以下链接，升级浏览器</p>
+					<ul class="browser">
+						<li class="download-browser">
+							<a
+								href="https://www.microsoft.com/zh-cn/download/internet-explorer.aspx"
+								target="_blank"
+							>
+								<div><img src="./static/browser/ie.png" /></div>
+								<div>
+									Internet Explorer 10+
+									<p class="help-text">(10.0及以上)</p>
+								</div>
+							</a>
+						</li>
+						<li class="download-browser">
+							<a
+								href="https://www.google.cn/chrome/browser/desktop/index.html"
+								target="_blank"
+							>
+								<div><img src="./static/browser/chrome.png" /></div>
+								<div>
+									Chrome 40+
+									<p class="help-text">(40.0及以上)</p>
+								</div>
+							</a>
+						</li>
+						<li class="download-browser">
+							<a href="https://www.mozilla.org/zh-CN/firefox/new/" target="_blank">
+								<div><img src="./static/browser/firefox.png" /></div>
+								<div>
+									Firefox 40+
+									<p class="help-text">(40.0及以上)</p>
+								</div>
+							</a>
+						</li>
+						<li class="download-browser">
+							<a href="https://www.apple.com/safari/" target="_blank">
+								<div><img src="./static/browser/safari.png" /></div>
+								<div>
+									Safari 5+
+									<p class="help-text">(5.0及以上)</p>
+								</div>
+							</a>
+						</li>
+					</ul>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+			<script>
+				(function() {
+					var browserInfo = (function() {
+						var sys = {},
+							ua = navigator.userAgent.toLowerCase(),
+							s;
+						window.IS_IPAD = /ipad/i.test(ua);
+						if (window.IS_IPAD) {
+							document.body.style.minWidth = "auto";
+							document.documentElement.style.minWidth = "auto";
+						}
+						(s = ua.match(/rv:([\d.]+)\) like gecko/))
+							? (sys.ie = s[1])
+							: (s = ua.match(/msie ([\d\.]+)/))
+							? (sys.ie = s[1])
+							: (s = ua.match(/edge\/([\d\.]+)/))
+							? (sys.edge = s[1])
+							: (s = ua.match(/firefox\/([\d\.]+)/))
+							? (sys.firefox = s[1])
+							: (s = ua.match(/(?:opera|opr).([\d\.]+)/))
+							? (sys.opera = s[1])
+							: (s = ua.match(/chrome\/([\d\.]+)/))
+							? (sys.chrome = s[1])
+							: (s = ua.match(/version\/([\d\.]+).*safari/))
+							? (sys.safari = s[1])
+							: 0;
+						// 根据关系进行判断
+						if (sys.ie) return { browser: "ie", version: sys.ie };
+						if (sys.edge) return { browser: "edge", version: sys.edge };
+						if (sys.firefox) return { browser: "firefox", version: sys.firefox };
+						if (sys.chrome) return { browser: "chrome", version: sys.chrome };
+						if (sys.opera) return { browser: "opera", version: sys.opera };
+						if (sys.safari) return { browser: "safari", version: sys.safari };
+						return { browser: "Unkonwn" };
+					})();
+					// 请求头 需要 传 X-SYSTEM-VERSION 参数
+					window["X-SYSTEM-VERSION"] = browserInfo.browser + browserInfo.version;
+					var ver = parseInt(browserInfo.version, 10) || 0;
+					if (
+						(browserInfo.browser === "ie" && ver < 10) ||
+						(browserInfo.browser === "edge" && ver < 10) ||
+						(browserInfo.browser === "chrome" && ver < 40) ||
+						(browserInfo.browser === "firefox" && ver < 40) ||
+						(browserInfo.browser === "safari" && ver < 5)
+					) {
+						document.body.innerHTML = document.getElementById("nonsupport").innerHTML;
+					}
+				})();
+			</script>
+		</div>
+		<!-- built files will be auto injected -->
+		<% htmlWebpackPlugin.options.cdnConfig.forEach(function(item){ if(item.js){ %>
+		<script type="text/javascript" src="<%= item.js %>"></script>
+		<% }}) %>
+		<script src="//wg.cloud.ininin.com/js/tinymce4.7.5/tinymce.min.js"></script>
+		<script src="//api.map.baidu.com/api?v=2.0&ak=VybvSG3RqpGQzp6GwlzNOmiq&s=1"></script>
+		<script src="//api.map.baidu.com/library/LuShu/1.2/src/LuShu_min.js"></script>
+		<!-- 高德地图JSAPI -->
+		<script src="https://webapi.amap.com/maps?v=1.4.15&key=588c8d3b76226ab0479b6c439d6534d9&plugin=AMap.DistrictSearch,AMap.Geocoder"></script>
+
+		<!-- 高德地图UI组件库 -->
+		<script src="//webapi.amap.com/ui/1.0/main.js"></script>
+	</body>
+</html>
