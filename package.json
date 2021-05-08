@@ -14,7 +14,7 @@
     "dependencies": {
         "echarts": "^4.8.0",
         "element-ui": "^2.13.2",
-        "lodash": "^4.17.15",
+        "lodash": "^4.17.21",
         "pretty": "^2.0.0",
         "vue": "^2.6.11",
         "vue-clipboard2": "^0.3.0",
